@@ -10,7 +10,7 @@ from cryptography.hazmat.primitives import serialization
 key = None
 if key is None:
     print("Generating ephemeral instance key-pair...")
-    private_key = rsa.generate_private_key(
+    key = rsa.generate_private_key(
         public_exponent=65537,
         key_size=4094,
         backend=default_backend()
@@ -27,3 +27,5 @@ def public_key():
         encoding=serialization.Encoding.PEM,
         format=serialization.PublicFormat.SubjectPublicKeyInfo
     ).decode("ascii")
+
+print(public_key())
