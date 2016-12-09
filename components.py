@@ -44,7 +44,7 @@ def __key_url(component, key_id):
         netloc=url.netloc,
         path='/keys',
         params='',
-        query=urllib.parse.urlencode({"id": key_id}),
+        query=urllib.parse.urlencode({"key_id": key_id}),
         fragment=None
     )
     return urllib.parse.urlunparse(parts)
