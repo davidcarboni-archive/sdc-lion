@@ -82,8 +82,3 @@ def get_key(component, key_id):
 
     return key
 
-
-if __name__ == '__main__':
-    print(components)
-    print(urls)
-    print(get_key(SDC_LOGIN_USER, 2))

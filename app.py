@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import components
 import keys
+import public_keys
 
 app = Flask(__name__)
 
@@ -16,8 +17,13 @@ def info():
 
 
 @app.route('/keys')
-def public_keys():
-    return jsonify({"key_id": 1, "key": keys.public_key()})
+def keys():
+    return jsonify(public_keys.list())
+
+
+@app.route('/chat')
+def chat():
+    return jsonify(public_keys.list())
 
 
 if __name__ == '__main__':
