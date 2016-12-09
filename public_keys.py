@@ -34,7 +34,7 @@ if os.getenv('SQL_DEBUG') == 'true':
 
 # Public key model
 class PublicKey(db.Model):
-    __table_args__ = {'schema': SCHEMA_NAME}
+    #__table_args__ = {'schema': SCHEMA_NAME}
     # Columns
     key_id = Column(Integer, primary_key=True)
     pem = Column(Text())
