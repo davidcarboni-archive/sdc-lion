@@ -22,6 +22,7 @@ CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] =  os.getenv("DATABASE_URL", "sqlite:///:memory:")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+db.create_all()
 SCHEMA_NAME = None if app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite') \
     else '{}_{}'.format(ENVIRONMENT_NAME, SERVICE_NAME)
 
