@@ -32,7 +32,7 @@ def chat():
     return "I'm going to try to talk to " + repr(components.get_key(components.SDC_GIRAFFE, 2))
 
 
-if __name__ == '__main__':
+def initialise_database():
 
     # Set up the database
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL", "sqlite:///:memory:")
@@ -50,6 +50,11 @@ if __name__ == '__main__':
 
         logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
         logging.getLogger('sqlalchemy.engine').setLevel(logging.DEBUG)
+
+
+if __name__ == '__main__':
+
+    initialise_database()
 
     # Initialise a key-pair for this instance
     generate_key()
