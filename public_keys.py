@@ -32,3 +32,14 @@ def list_keys():
     for key in keys:
         result[key.key_id] = key.pem
     return result
+
+
+def get_key(key_id):
+    result = {}
+    try:
+        keys = PublicKey.query.filter_by(key_id=int(key_id))
+        for key in keys:
+            result[key.key_id] = key.pem
+    except ValueError:
+        print("Unable to query for key ID: " + repr(key_id))
+    return result

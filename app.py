@@ -19,6 +19,11 @@ def info():
 
 @app.route('/keys')
 def keys():
+    key_id = request.args.get("key_id")
+    if key_id:
+        print("Getting key ID " + repr(key_id))
+        return jsonify(public_keys.get_key(key_id))
+    print("Listing all keys")
     return jsonify(public_keys.list_keys())
 
 
