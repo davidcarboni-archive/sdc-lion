@@ -50,6 +50,23 @@ def __key_url(component, key_id):
     return urllib.parse.urlunparse(parts)
 
 
+def __request_key(component, key_id):
+    url = __key_url(component, key_id)
+    print("Attempting to get key " + repr(key_id) + " from " + repr(component) + " at " + repr(url))
+    response = requests.get(url)
+    if response.status_code == 200:
+        # We should have the expected Json response
+        keys = response.json()
+        print("Got key(s): " + repr(keys))
+        if repr(key_id) in keys:
+            public_keys[component][key_id] = keys[repr(key_id)]
+            print("Found key id " + repr(key_id) + " for component " + repr(component))
+        else:
+            print("Key id " + repr(key_id) + " not found for component " + repr(component))
+    else:
+        print("Unexpected response from " + repr(component) + ": " + repr(response.status_code))
+
+
 def get_key(component, key_id):
     key = None
 
@@ -58,17 +75,9 @@ def get_key(component, key_id):
 
         # Fetch and cache the key if necessary
         if key_id not in public_keys[component]:
-
-            url = __key_url(component, key_id)
-            print("Attempting to get key " + repr(key_id) + " from " + repr(component) + " at " + repr(url))
-            response = requests.get(url)
-            if response.status_code == 200:
-                # We should have the expected Json response
-                keys = response.json()
-                if key_id in keys:
-                    public_keys[component][key_id] = keys[key_id]
-            else:
-                print("Unexpected response from " + repr(component) + ": " + repr(response.status_code))
+            __request_key(component, key_id)
+        else:
+            print("Using cached key " + repr(key_id) + " for component " + repr(component))
 
         # Get the key from the cache
         if key_id in public_keys[component]:
@@ -76,9 +85,10 @@ def get_key(component, key_id):
         else:
             print("Unable to get key id " + repr(key_id) +
                   " from " + repr(component) +
-                  " (at " + repr(url) + ")")
+                  " (at " + repr(__key_url(component, key_id)) + ")")
     else:
         print("Component " + repr(component) + " is not a recognised client.")
 
+    #print("Key cache is:\n" + repr(public_keys))
+    #print("Selected key is:\n" + repr(key))
     return key
-
