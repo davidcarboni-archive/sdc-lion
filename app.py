@@ -16,7 +16,7 @@ def info():
 
 
 @app.route('/keys')
-def keys():
+def public_keys():
     return jsonify({"key_id": 1, "key": keys.public_key()})
 
 
